@@ -37,8 +37,8 @@
 - 用户模型 (User, Customer) ✅
 - 产品模型 (Product, ProductVariant) ✅
 - 分类模型 (Category) ✅
-- 库存模型 (Inventory)
-- 购物车模型 (Cart, CartItem)
+- 库存模型 (Inventory) ✅
+- 购物车模型 (Cart, CartItem) ✅
 - 订单模型 (Order, OrderItem)
 - 支付模型 (Payment, Transaction)
 

@@ -32,15 +32,15 @@
 - 依赖配置管理 ✅
 - 基础配置文件设置 ✅
 
-### 2. 后端核心数据模型开发 ⏳
+### 2. 后端核心数据模型开发 ✅
 
 - 用户模型 (User, Customer) ✅
 - 产品模型 (Product, ProductVariant) ✅
 - 分类模型 (Category) ✅
 - 库存模型 (Inventory) ✅
 - 购物车模型 (Cart, CartItem) ✅
-- 订单模型 (Order, OrderItem)
-- 支付模型 (Payment, Transaction)
+- 订单模型 (Order, OrderItem) ✅
+- 支付模型 (Payment, Transaction) ✅
 
 ### 3. 后端数据访问层开发
 

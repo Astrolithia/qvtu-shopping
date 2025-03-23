@@ -98,6 +98,7 @@
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
+      "postgresql",
       "mysql"
     ]
   }
@@ -152,7 +153,7 @@
       <workItem from="1742737879650" duration="3489000" />
       <workItem from="1742771656630" duration="823000" />
       <workItem from="1742772487067" duration="117000" />
-      <workItem from="1742772615160" duration="327000" />
+      <workItem from="1742772615160" duration="1291000" />
     </task>
     <servers />
   </component>

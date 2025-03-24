@@ -24,8 +24,8 @@ public class SecurityConfig {
         http
             .csrf().disable()
             .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/store/**").permitAll()
+                .requestMatchers("/api/auth/**", "/api/store/**", "/swagger-ui/**", "/swagger-ui.html", 
+                                "/api-docs/**", "/v3/api-docs/**", "/api/api-docs/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             .and()

@@ -75,4 +75,14 @@ public class GlobalExceptionHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(response);
     }
+    
+    @ExceptionHandler(io.jsonwebtoken.JwtException.class)
+    public ResponseEntity<ApiResponse<Void>> handleJwtException(io.jsonwebtoken.JwtException ex) {
+        ApiResponse<Void> response = ApiResponse.<Void>builder()
+                .success(false)
+                .message("Invalid authentication token: " + ex.getMessage())
+                .build();
+        
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
 } 

@@ -2,6 +2,7 @@ package com.qvtu.service.impl;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qvtu.dto.AddressDTO;
 import com.qvtu.dto.CustomerDTO;
 import com.qvtu.dto.CustomerGroupDTO;
@@ -30,6 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     
     private final CustomerRepository customerRepository;
     private final AddressRepository addressRepository;
+    private final ObjectMapper objectMapper;
     
     @Override
     public CustomerDTO findById(Long id) {
@@ -74,9 +76,9 @@ public class CustomerServiceImpl implements CustomerService {
         
         if (customerDTO.getUserId() != null) {
             customer.setHasAccount(true);
-            // 注意：Customer继承自User，不需要单独设置userId
-            // 如需要关联已有用户，应通过其他方式处理
         }
+        
+        customer.setMetadata(customerDTO.getMetadata());
         
         Customer savedCustomer = customerRepository.save(customer);
         
@@ -97,6 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
                 address.setPhone(addressDTO.getPhone());
                 address.setIsDefaultShipping(addressDTO.isDefaultShipping());
                 address.setIsDefaultBilling(addressDTO.isDefaultBilling());
+                address.setMetadata(addressDTO.getMetadata());
                 
                 addressRepository.save(address);
             }
@@ -115,6 +118,8 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setLastName(customerDTO.getLastName());
         customer.setPhone(customerDTO.getPhone());
         customer.setAvatarUrl(customerDTO.getAvatarUrl());
+        
+        customer.setMetadata(customerDTO.getMetadata());
         
         Customer updatedCustomer = customerRepository.save(customer);
         
@@ -168,6 +173,8 @@ public class CustomerServiceImpl implements CustomerService {
             address.setIsDefaultBilling(true);
         }
         
+        address.setMetadata(addressDTO.getMetadata());
+        
         Address savedAddress = addressRepository.save(address);
         
         return mapToAddressDTO(savedAddress);
@@ -207,6 +214,8 @@ public class CustomerServiceImpl implements CustomerService {
             customer.getAddresses().forEach(a -> a.setIsDefaultBilling(false));
             address.setIsDefaultBilling(true);
         }
+        
+        address.setMetadata(addressDTO.getMetadata());
         
         Address updatedAddress = addressRepository.save(address);
         
@@ -263,9 +272,6 @@ public class CustomerServiceImpl implements CustomerService {
      * @return CustomerDTO
      */
     private CustomerDTO mapToDTO(Customer customer) {
-        // 将JSON字符串转换为Map
-        Map<String, Object> metadataMap = convertMetadataToMap(customer.getMetadata());
-        
         CustomerDTO dto = CustomerDTO.builder()
                 .id(customer.getId())
                 .userId(customer.getUserId())
@@ -278,7 +284,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .companyName(customer.getCompanyName())
                 .defaultBillingAddressId(customer.getDefaultBillingAddressId())
                 .defaultShippingAddressId(customer.getDefaultShippingAddressId())
-                .metadata(metadataMap)
+                .metadata(customer.getMetadata())
                 .createdBy(customer.getCreatedBy())
                 .createdAt(customer.getCreatedAt())
                 .updatedAt(customer.getUpdatedAt())
@@ -324,7 +330,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .phone(address.getPhone())
                 .isDefaultShipping(address.isIsDefaultShipping())
                 .isDefaultBilling(address.isIsDefaultBilling())
-                .metadata(convertMetadataToMap(address.getMetadata()))
+                .metadata(address.getMetadata())
                 .createdAt(address.getCreatedAt())
                 .updatedAt(address.getUpdatedAt())
                 .build();
@@ -332,28 +338,20 @@ public class CustomerServiceImpl implements CustomerService {
     
     // 将客户组实体映射为DTO
     private CustomerGroupDTO mapToCustomerGroupDTO(CustomerGroup group) {
-        return CustomerGroupDTO.builder()
-                .id(group.getId())
-                .name(group.getName())
-                .metadata(convertMetadataToMap(group.getMetadata()))
-                .createdAt(group.getCreatedAt())
-                .updatedAt(group.getUpdatedAt())
-                .deletedAt(group.getDeletedAt())
-                .build();
-    }
-    
-    // 将JSON字符串转换为Map的辅助方法
-    private Map<String, Object> convertMetadataToMap(String metadata) {
-        if (metadata == null || metadata.isEmpty()) {
-            return null;
+        Map<String, Object> metadataMap = null;
+        try {
+            if (group.getMetadata() != null) {
+                metadataMap = objectMapper.readValue(group.getMetadata(), new TypeReference<Map<String, Object>>() {});
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error converting metadata", e);
         }
         
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.readValue(metadata, new TypeReference<Map<String, Object>>() {});
-        } catch (Exception e) {
-            // 记录错误但返回null以避免中断流程
-            return null;
-        }
+        return CustomerGroupDTO.builder()
+                .name(group.getName())
+                .metadata(metadataMap)
+                .createdAt(group.getCreatedAt())
+                .updatedAt(group.getUpdatedAt())
+                .build();
     }
 } 

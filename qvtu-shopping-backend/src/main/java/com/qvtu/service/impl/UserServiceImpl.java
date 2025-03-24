@@ -161,9 +161,6 @@ public class UserServiceImpl implements UserService {
      * @return UserDTO
      */
     private UserDTO mapToDTO(User user) {
-        // 假设我们有某种方式将JSON字符串转换为Map
-        Map<String, Object> metadataMap = convertMetadataToMap(user.getMetadata());
-        
         return UserDTO.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -173,18 +170,10 @@ public class UserServiceImpl implements UserService {
                 .avatarUrl(user.getAvatarUrl())
                 .phone(user.getPhone())
                 .active(user.isActive())
-                .metadata(metadataMap)
+                .metadata(user.getMetadata())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .deletedAt(user.getDeletedAt())
                 .build();
-    }
-    
-    // 将JSON字符串转换为Map的辅助方法
-    private Map<String, Object> convertMetadataToMap(String metadata) {
-        // 这里需要实现JSON转Map的逻辑
-        // 如果使用Jackson，可以使用ObjectMapper
-        // 为简化，这里返回null
-        return null;
     }
 } 

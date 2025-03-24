@@ -29,13 +29,12 @@ public class SecurityConfig {
             .csrf().disable()
             .cors().configurationSource(corsConfigurationSource())
             .and()
-            .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**", "/api/store/**").permitAll()
-                .requestMatchers("/api/v3/api-docs/**", "/api/swagger-ui/**").permitAll()
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/auth/**", "/store/**").permitAll()
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
-            .and()
+            )
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -63,4 +63,5 @@
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/service/impl/CustomerServiceImpl.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/service/impl/UserDetailsServiceImpl.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/service/impl/UserServiceImpl.java
+/Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/util/JsonConverter.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/util/JwtUtil.java

@@ -11,42 +11,21 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "users")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+@Table(name = "customer_groups")
+public class CustomerGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
     @Column(nullable = false)
-    private String password;
-
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "phone")
-    private String phone;
-
-    @Column(name = "avatar_url")
-    private String avatarUrl;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role")
-    private Set<String> roles = new HashSet<>();
-
-    @Column(name = "is_active", nullable = false)
-    private boolean isActive = true;
+    private String name;
 
     @Column(name = "metadata", columnDefinition = "jsonb")
     private String metadata;
+
+    @ManyToMany(mappedBy = "groups")
+    private Set<Customer> customers = new HashSet<>();
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -58,4 +37,4 @@ public class User {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-}
+} 

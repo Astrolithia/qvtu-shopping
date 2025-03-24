@@ -42,23 +42,32 @@
 - 订单模型 (Order, OrderItem) ✅
 - 支付模型 (Payment, Transaction) ✅
 
-### 3. 后端数据访问层开发
+### 3. 后端数据访问层开发 ✅
 
-- 基础Repository接口实现
-- 自定义查询方法开发
-- 数据关系映射配置
+- 基础Repository接口实现 ✅
+- 自定义查询方法开发 ✅
+- 数据关系映射配置 ✅
 
-### 4. 后端服务层开发
+### 4. 后端服务层开发 ⏳
 
-- 用户服务 (UserService, CustomerService)
-- 产品服务 (ProductService)
+- 用户服务 (UserService, CustomerService) ✅
+- 产品服务 (ProductService) ⏳
 - 购物车服务 (CartService)
 - 库存服务 (InventoryService)
 - 订单服务 (OrderService)
 - 支付服务 (PaymentService)
 - 搜索服务 (SearchService)
 
-### 5. 后端API控制器开发
+### 5. 后端控制器层开发 ⏳
+
+- 用户控制器 (UserController, AuthController) ✅
+- 客户控制器 (CustomerController) ✅
+- 产品控制器 (ProductController) ⏳
+- 购物车控制器 (CartController)
+- 订单控制器 (OrderController)
+- 支付控制器 (PaymentController)
+
+### 6. 后端API控制器开发
 
 #### 安全与认证
 - JWT认证实现
@@ -78,7 +87,7 @@
 - 订单管理API
 - 库存管理API
 
-### 6. 前端开发
+### 7. 前端开发
 
 #### 基础设置
 - 克隆Medusa Next.js模板
@@ -92,7 +101,7 @@
 - 结账流程
 - 订单查看
 
-### 7. 集成服务
+### 8. 集成服务
 
 #### 支付集成
 - 支付网关接入 (支付宝/微信支付)
@@ -106,7 +115,7 @@
 - 基本搜索实现
 - 高级筛选功能
 
-### 8. 性能优化
+### 9. 性能优化
 
 #### 缓存实现
 - Redis缓存配置
@@ -116,7 +125,7 @@
 - 消息队列集成
 - 异步任务处理
 
-### 9. 测试
+### 10. 测试
 
 #### 单元测试
 - 服务层测试
@@ -126,7 +135,7 @@
 - API测试
 - 前后端交互测试
 
-### 10. 部署与运维
+### 11. 部署与运维
 
 #### 容器化
 - Dockerfile创建
@@ -139,7 +148,7 @@
 - 日志收集系统
 - 性能监控工具
 
-### 11. 文档与上线
+### 12. 文档与上线
 
 #### 技术文档
 - API文档

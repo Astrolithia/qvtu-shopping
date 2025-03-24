@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f9dd00aa-c9e8-4235-97f9-f4267fc6ff22" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/src/main/java/com/qvtu/mallshopping/config/JpaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/src/main/java/com/qvtu/mallshopping/config/JpaConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/src/main/java/com/qvtu/mallshopping/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/src/main/java/com/qvtu/mallshopping/config/SecurityConfig.java" afterDir="false" />
@@ -31,6 +30,16 @@
       <change beforePath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/src/test/java/com/qvtu/mallshopping/controller/CustomerAuthControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/src/test/java/com/qvtu/mallshopping/controller/CustomerAuthControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../my-shopping-storefront/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../my-shopping-storefront/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../my-shopping-storefront/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../my-shopping-storefront/src/middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/model/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/model/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +54,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -72,37 +81,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.QvtuShoppingBackendApplication.executor": "Run",
-    "Spring Boot.ShopEaseAdminApplication.executor": "Run",
-    "Spring Boot.ShopEasePortalApplication.executor": "Run",
-    "Spring Boot.ShopEaseSearchApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/astrolithia/Documents/Project/qvtu-shopping",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.QvtuShoppingBackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShopEaseAdminApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShopEasePortalApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShopEaseSearchApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/astrolithia/Documents/Project/qvtu-shopping&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql",
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;,
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -153,7 +162,8 @@
       <workItem from="1742737879650" duration="3489000" />
       <workItem from="1742771656630" duration="823000" />
       <workItem from="1742772487067" duration="117000" />
-      <workItem from="1742772615160" duration="1291000" />
+      <workItem from="1742772615160" duration="2317000" />
+      <workItem from="1742775090613" duration="2543000" />
     </task>
     <servers />
   </component>

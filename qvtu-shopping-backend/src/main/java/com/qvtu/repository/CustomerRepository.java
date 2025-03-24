@@ -43,4 +43,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
      */
     Page<Customer> findByFirstNameContainingOrLastNameContainingOrEmailContaining(
             String firstName, String lastName, String email, Pageable pageable);
+
+    boolean existsByEmail(String email);
 } 

@@ -58,34 +58,104 @@
 - 支付服务 (PaymentService)
 - 搜索服务 (SearchService)
 
-### 5. 后端控制器层开发 ⏳
+### 5. 后端API控制器开发 ⏳
 
-- 用户控制器 (UserController, AuthController) ✅
-- 客户控制器 (CustomerController) ✅
-- 产品控制器 (ProductController) ⏳
-- 购物车控制器 (CartController)
-- 订单控制器 (OrderController)
-- 支付控制器 (PaymentController)
+#### 5.1 认证模块 (Auth) ✅
+- POST /auth/login - 用户登录 ✅
+- POST /auth/register - 用户注册 ✅
+- DELETE /auth/logout - 用户登出
+- POST /auth/token/refresh - 刷新身份验证令牌
+- POST /auth/session - 设置认证会话
+- DELETE /auth/session - 删除认证会话
 
-### 6. 后端API控制器开发
+#### 5.2 用户模块 (Users) ⏳
+- GET /users/me - 获取当前用户信息 ✅
+- PUT /users/me - 更新当前用户信息 ✅
+- PUT /users/me/password - 修改密码 ✅
+- GET /admin/users - 获取所有用户(管理员) ✅
+- GET /admin/users/{id} - 根据ID获取用户(管理员) ✅
+- PUT /admin/users/{id} - 更新用户(管理员) ✅
+- DELETE /admin/users/{id} - 删除用户(管理员) ✅
 
-#### 安全与认证
+#### 5.3 客户模块 (Customers) ⏳
+- GET /customers/me - 获取当前客户信息 ✅
+- PUT /customers/me - 更新当前客户信息 ✅
+- GET /customers/me/addresses - 获取当前客户地址 ✅
+- POST /customers/me/addresses - 添加地址 ✅
+- PUT /customers/me/addresses/{id} - 更新地址 ✅
+- DELETE /customers/me/addresses/{id} - 删除地址 ✅
+- PUT /customers/me/addresses/{id}/default - 设置默认地址 ✅
+- GET /admin/customers - 获取所有客户(管理员) ✅
+- GET /admin/customers/search - 搜索客户(管理员) ✅
+- GET /admin/customers/{id} - 根据ID获取客户(管理员) ✅
+- POST /admin/customers - 创建客户(管理员) ✅
+- PUT /admin/customers/{id} - 更新客户(管理员) ✅
+- DELETE /admin/customers/{id} - 删除客户(管理员) ✅
+
+#### 5.4 产品模块 (Products)
+- GET /store/products - 获取产品列表
+- GET /store/products/{id} - 获取产品详情
+- GET /store/products/search - 搜索产品
+- GET /admin/products - 获取所有产品(管理员)
+- POST /admin/products - 创建产品(管理员)
+- GET /admin/products/{id} - 获取产品详情(管理员)
+- PUT /admin/products/{id} - 更新产品(管理员)
+- DELETE /admin/products/{id} - 删除产品(管理员)
+- POST /admin/products/{id}/variants - 添加产品变体(管理员)
+- PUT /admin/products/{id}/variants/{variant_id} - 更新产品变体(管理员)
+- DELETE /admin/products/{id}/variants/{variant_id} - 删除产品变体(管理员)
+
+#### 5.5 分类模块 (Categories)
+- GET /store/categories - 获取分类列表
+- GET /store/categories/{id} - 获取分类详情
+- GET /admin/categories - 获取所有分类(管理员)
+- POST /admin/categories - 创建分类(管理员)
+- GET /admin/categories/{id} - 获取分类详情(管理员)
+- PUT /admin/categories/{id} - 更新分类(管理员)
+- DELETE /admin/categories/{id} - 删除分类(管理员)
+
+#### 5.6 购物车模块 (Carts)
+- POST /store/carts - 创建购物车
+- GET /store/carts/{id} - 获取购物车
+- PUT /store/carts/{id} - 更新购物车
+- POST /store/carts/{id}/line-items - 添加商品到购物车
+- PUT /store/carts/{id}/line-items/{item_id} - 更新购物车商品
+- DELETE /store/carts/{id}/line-items/{item_id} - 删除购物车商品
+- POST /store/carts/{id}/complete - 完成购物车结算
+
+#### 5.7 订单模块 (Orders)
+- GET /store/orders - 获取订单列表
+- GET /store/orders/{id} - 获取订单详情
+- POST /store/orders - 创建订单
+- GET /admin/orders - 获取所有订单(管理员)
+- POST /admin/orders - 创建订单(管理员)
+- GET /admin/orders/{id} - 获取订单详情(管理员)
+- PUT /admin/orders/{id} - 更新订单(管理员)
+- POST /admin/orders/{id}/fulfill - 订单履行(管理员)
+- POST /admin/orders/{id}/refund - 订单退款(管理员)
+- POST /admin/orders/{id}/cancel - 取消订单(管理员)
+
+#### 5.8 支付模块 (Payments)
+- GET /store/payment-methods - 获取支付方式
+- POST /store/payments - 创建支付
+- GET /admin/payments - 获取所有支付(管理员)
+- GET /admin/payments/{id} - 获取支付详情(管理员)
+- POST /admin/payments/{id}/capture - 捕获支付(管理员)
+- POST /admin/payments/{id}/refund - 退款支付(管理员)
+
+#### 5.9 库存模块 (Inventory)
+- GET /admin/inventory-items - 获取库存项(管理员)
+- GET /admin/inventory-items/{id} - 获取库存项详情(管理员)
+- POST /admin/inventory-items - 创建库存项(管理员)
+- PUT /admin/inventory-items/{id} - 更新库存项(管理员)
+- DELETE /admin/inventory-items/{id} - 删除库存项(管理员)
+- POST /admin/inventory-items/{id}/adjust - 调整库存(管理员)
+
+### 6. 安全与认证实现
+
 - JWT认证实现
 - 权限控制系统
 - CORS配置
-
-#### 商店前端API (/store/)
-- 产品API
-- 用户认证API
-- 购物车API
-- 结账API
-- 订单API
-
-#### 管理后台API (/admin/)
-- 产品管理API
-- 用户管理API
-- 订单管理API
-- 库存管理API
 
 ### 7. 前端开发
 

@@ -10,6 +10,7 @@
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/dto/ApiResponse.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/dto/CustomerDTO.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/dto/CustomerGroupDTO.java
+/Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/dto/CustomerGroupRequest.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/dto/UserDTO.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/dto/auth/AuthResponse.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/dto/auth/LoginRequest.java
@@ -47,6 +48,7 @@
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/repository/CartItemRepository.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/repository/CartRepository.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/repository/CategoryRepository.java
+/Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/repository/CustomerGroupRepository.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/repository/CustomerRepository.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/repository/InventoryItemRepository.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/repository/InventoryLevelRepository.java

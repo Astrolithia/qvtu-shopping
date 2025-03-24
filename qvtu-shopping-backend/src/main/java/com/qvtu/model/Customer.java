@@ -55,13 +55,13 @@ public class Customer extends User {
     // 客户地址列表
     @JsonManagedReference
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addresses = new ArrayList<>();
+    private Set<Address> addresses = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
-        name = "customer_group_customers",
+        name = "customer_customer_group",
         joinColumns = @JoinColumn(name = "customer_id"),
-        inverseJoinColumns = @JoinColumn(name = "group_id")
+        inverseJoinColumns = @JoinColumn(name = "customer_group_id")
     )
     private Set<CustomerGroup> groups = new HashSet<>();
 

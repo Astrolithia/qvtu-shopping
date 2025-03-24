@@ -105,4 +105,27 @@ public interface CustomerService {
      * @return 更新后的地址DTO
      */
     AddressDTO setDefaultAddress(Long customerId, Long addressId);
+    
+    /**
+     * 更新客户群组
+     * @param id 客户ID
+     * @param groupIds 群组ID列表
+     * @return 更新后的客户DTO
+     */
+    CustomerDTO updateCustomerGroups(Long id, List<Long> groupIds);
+    
+    /**
+     * 获取客户的所有地址
+     * @param customerId 客户ID
+     * @return 地址DTO列表
+     */
+    List<AddressDTO> getCustomerAddresses(Long customerId);
+    
+    /**
+     * 获取客户特定地址
+     * @param customerId 客户ID
+     * @param addressId 地址ID
+     * @return 地址DTO
+     */
+    AddressDTO getCustomerAddress(Long customerId, Long addressId);
 } 

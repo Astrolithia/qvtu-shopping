@@ -1,20 +1,20 @@
 package com.qvtu.controller;
 
-import com.qvtu.dto.AddressDTO;
-import com.qvtu.dto.ApiResponse;
-import com.qvtu.dto.CustomerDTO;
-import com.qvtu.dto.UserDTO;
+import com.qvtu.dto.*;
 import com.qvtu.service.CustomerService;
 import com.qvtu.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("")
@@ -215,7 +215,9 @@ public class CustomerController {
     
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/customers")
-    public ResponseEntity<ApiResponse<CustomerDTO>> createCustomer(@RequestBody CustomerDTO customerDTO) {
+    @Operation(summary = "创建客户", description = "管理员创建新客户")
+    public ResponseEntity<ApiResponse<CustomerDTO>> createCustomer(
+            @RequestBody @Valid CustomerDTO customerDTO) {
         CustomerDTO createdCustomer = customerService.createCustomer(customerDTO);
         
         ApiResponse<CustomerDTO> response = ApiResponse.<CustomerDTO>builder()
@@ -224,7 +226,7 @@ public class CustomerController {
                 .data(createdCustomer)
                 .build();
         
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     
     @PreAuthorize("hasRole('ADMIN')")
@@ -251,6 +253,52 @@ public class CustomerController {
         ApiResponse<Void> response = ApiResponse.<Void>builder()
                 .success(true)
                 .message("Customer deleted successfully")
+                .build();
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/admin/customers/{id}/addresses")
+    @Operation(summary = "获取客户地址列表", description = "获取特定客户的所有地址")
+    public ResponseEntity<ApiResponse<List<AddressDTO>>> getCustomerAddresses(@PathVariable Long id) {
+        List<AddressDTO> addresses = customerService.getCustomerAddresses(id);
+        
+        ApiResponse<List<AddressDTO>> response = ApiResponse.<List<AddressDTO>>builder()
+                .success(true)
+                .message("Customer addresses retrieved successfully")
+                .data(addresses)
+                .build();
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/admin/customers/{id}/addresses/{addressId}")
+    @Operation(summary = "获取客户特定地址", description = "获取客户的特定地址")
+    public ResponseEntity<ApiResponse<AddressDTO>> getCustomerAddress(
+            @PathVariable Long id,
+            @PathVariable Long addressId) {
+        AddressDTO address = customerService.getCustomerAddress(id, addressId);
+        
+        ApiResponse<AddressDTO> response = ApiResponse.<AddressDTO>builder()
+                .success(true)
+                .message("Address retrieved successfully")
+                .data(address)
+                .build();
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @PostMapping("/admin/customers/{id}/customer-groups")
+    @Operation(summary = "管理客户群组", description = "将客户添加到指定客户群组")
+    public ResponseEntity<ApiResponse<CustomerDTO>> manageCustomerGroups(
+            @PathVariable Long id,
+            @RequestBody CustomerGroupRequest request) {
+        CustomerDTO updatedCustomer = customerService.updateCustomerGroups(id, request.getGroups());
+        
+        ApiResponse<CustomerDTO> response = ApiResponse.<CustomerDTO>builder()
+                .success(true)
+                .message("Customer groups updated successfully")
+                .data(updatedCustomer)
                 .build();
         
         return ResponseEntity.ok(response);

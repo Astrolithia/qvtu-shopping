@@ -6,12 +6,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qvtu.dto.AddressDTO;
 import com.qvtu.dto.CustomerDTO;
 import com.qvtu.dto.CustomerGroupDTO;
+import com.qvtu.exception.EmailAlreadyExistsException;
 import com.qvtu.exception.ResourceNotFoundException;
 import com.qvtu.model.Address;
 import com.qvtu.model.Customer;
 import com.qvtu.model.CustomerGroup;
 import com.qvtu.repository.AddressRepository;
 import com.qvtu.repository.CustomerRepository;
+import com.qvtu.repository.CustomerGroupRepository;
 import com.qvtu.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
     
     private final CustomerRepository customerRepository;
     private final AddressRepository addressRepository;
+    private final CustomerGroupRepository customerGroupRepository;
     private final ObjectMapper objectMapper;
     
     @Override
@@ -67,44 +72,16 @@ public class CustomerServiceImpl implements CustomerService {
     
     @Override
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
-        Customer customer = new Customer();
-        customer.setEmail(customerDTO.getEmail());
-        customer.setFirstName(customerDTO.getFirstName());
-        customer.setLastName(customerDTO.getLastName());
-        customer.setPhone(customerDTO.getPhone());
-        customer.setAvatarUrl(customerDTO.getAvatarUrl());
-        
-        if (customerDTO.getUserId() != null) {
-            customer.setHasAccount(true);
+        // 检查邮箱是否已存在
+        if (customerRepository.existsByEmail(customerDTO.getEmail())) {
+            throw new EmailAlreadyExistsException(customerDTO.getEmail());
         }
         
-        customer.setMetadata(customerDTO.getMetadata());
+        Customer customer = mapToEntity(customerDTO);
+        customer.setCreatedAt(LocalDateTime.now());
+        customer.setUpdatedAt(LocalDateTime.now());
         
         Customer savedCustomer = customerRepository.save(customer);
-        
-        // 如果有地址，保存地址
-        if (customerDTO.getAddresses() != null && !customerDTO.getAddresses().isEmpty()) {
-            for (AddressDTO addressDTO : customerDTO.getAddresses()) {
-                Address address = new Address();
-                address.setCustomer(savedCustomer);
-                address.setFirstName(addressDTO.getFirstName());
-                address.setLastName(addressDTO.getLastName());
-                address.setCompany(addressDTO.getCompany());
-                address.setAddress1(addressDTO.getAddress1());
-                address.setAddress2(addressDTO.getAddress2());
-                address.setCity(addressDTO.getCity());
-                address.setProvince(addressDTO.getProvince());
-                address.setPostalCode(addressDTO.getPostalCode());
-                address.setCountryCode(addressDTO.getCountryCode());
-                address.setPhone(addressDTO.getPhone());
-                address.setIsDefaultShipping(addressDTO.isDefaultShipping());
-                address.setIsDefaultBilling(addressDTO.isDefaultBilling());
-                address.setMetadata(addressDTO.getMetadata());
-                
-                addressRepository.save(address);
-            }
-        }
-        
         return mapToDTO(savedCustomer);
     }
     
@@ -224,7 +201,8 @@ public class CustomerServiceImpl implements CustomerService {
     
     @Override
     public void deleteAddress(Long customerId, Long addressId) {
-        Customer customer = customerRepository.findById(customerId)
+        // Just check if customer exists
+        customerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
         
         Address address = addressRepository.findById(addressId)
@@ -264,6 +242,48 @@ public class CustomerServiceImpl implements CustomerService {
         Address updatedAddress = addressRepository.save(address);
         
         return mapToAddressDTO(updatedAddress);
+    }
+    
+    @Override
+    public CustomerDTO updateCustomerGroups(Long id, List<Long> groupIds) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", id));
+        
+        // 这里需要实现客户群组的更新逻辑
+        // 假设有CustomerGroup实体和对应的Repository
+        List<CustomerGroup> groups = groupIds.stream()
+                .map(groupId -> customerGroupRepository.findById(groupId)
+                    .orElseThrow(() -> new ResourceNotFoundException("CustomerGroup", "id", groupId)))
+                .collect(Collectors.toList());
+        
+        customer.setGroups(new HashSet<>(groups));
+        customer.setUpdatedAt(LocalDateTime.now());
+        
+        Customer savedCustomer = customerRepository.save(customer);
+        return mapToDTO(savedCustomer);
+    }
+    
+    @Override
+    public List<AddressDTO> getCustomerAddresses(Long customerId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
+        
+        return customer.getAddresses().stream()
+                .map(this::mapToAddressDTO)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public AddressDTO getCustomerAddress(Long customerId, Long addressId) {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
+        
+        Address address = customer.getAddresses().stream()
+                .filter(a -> a.getId().equals(addressId))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Address", "id", addressId));
+        
+        return mapToAddressDTO(address);
     }
     
     /**
@@ -353,5 +373,23 @@ public class CustomerServiceImpl implements CustomerService {
                 .createdAt(group.getCreatedAt())
                 .updatedAt(group.getUpdatedAt())
                 .build();
+    }
+
+    // Add this method to map DTO to entity
+    private Customer mapToEntity(CustomerDTO dto) {
+        Customer customer = new Customer();
+        customer.setUserId(dto.getUserId());
+        customer.setEmail(dto.getEmail());
+        customer.setFirstName(dto.getFirstName());
+        customer.setLastName(dto.getLastName());
+        customer.setPhone(dto.getPhone());
+        customer.setAvatarUrl(dto.getAvatarUrl());
+        customer.setHasAccount(dto.isHasAccount());
+        customer.setCompanyName(dto.getCompanyName());
+        customer.setDefaultBillingAddressId(dto.getDefaultBillingAddressId());
+        customer.setDefaultShippingAddressId(dto.getDefaultShippingAddressId());
+        customer.setMetadata(dto.getMetadata());
+        // Don't set createdAt, updatedAt here - they're set in the calling method
+        return customer;
     }
 } 

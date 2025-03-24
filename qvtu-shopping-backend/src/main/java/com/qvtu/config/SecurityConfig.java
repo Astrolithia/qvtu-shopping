@@ -31,12 +31,8 @@ public class SecurityConfig {
             .and()
             .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**", "/api/store/**").permitAll()
-                .requestMatchers("/api/swagger-ui/**", "/api/swagger-ui.html", 
-                    "/api/v3/api-docs/**", "/api/swagger-resources/**", 
-                    "/api/v3/api-docs.yaml", "/api/webjars/**").permitAll()
-                .requestMatchers("/swagger-ui/**", "/swagger-ui.html", 
-                    "/v3/api-docs/**", "/swagger-resources/**", 
-                    "/v3/api-docs.yaml", "/webjars/**").permitAll()
+                .requestMatchers("/api/v3/api-docs/**", "/api/swagger-ui/**").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             .and()

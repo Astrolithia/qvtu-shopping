@@ -15,27 +15,14 @@ public class SwaggerUiWebMvcConfigurer implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         String baseUrl = StringUtils.trimTrailingCharacter(this.baseUrl, '/');
         
-        // Swagger UI resources
+        // 简化资源处理器配置
         registry.addResourceHandler(baseUrl + "/swagger-ui/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/swagger-ui/4.15.5/");
-        
-        // Webjars resources
-        registry.addResourceHandler(baseUrl + "/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-                
-        // 添加通用 Swagger 配置
-        registry.addResourceHandler("/swagger-ui/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/swagger-ui/4.15.5/");
-                
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+                .addResourceLocations("classpath:/META-INF/resources/webjars/swagger-ui/");
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController(baseUrl + "/swagger-ui/")
                 .setViewName("forward:" + baseUrl + "/swagger-ui/index.html");
-        registry.addViewController("/swagger-ui/")
-                .setViewName("forward:/swagger-ui/index.html");
     }
 } 

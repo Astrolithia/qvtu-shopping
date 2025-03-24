@@ -3,7 +3,6 @@
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/config/SecurityConfig.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/config/SwaggerUiWebMvcConfigurer.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/config/WebConfig.java
-/Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/config/WebMvcConfig.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/controller/AuthController.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/controller/CustomerController.java
 /Users/astrolithia/Documents/Project/qvtu-shopping/qvtu-shopping-backend/src/main/java/com/qvtu/controller/UserController.java

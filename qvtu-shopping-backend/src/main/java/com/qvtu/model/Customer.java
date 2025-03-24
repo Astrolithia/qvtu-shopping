@@ -11,12 +11,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import jakarta.persistence.Transient;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "customers")
+
 public class Customer extends User {
+
+    @Transient
+    private Long userId;
 
     // 基本客户信息
     @Column(name = "has_account")

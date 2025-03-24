@@ -10,11 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import java.security.Principal;
 import java.util.List;
 import jakarta.validation.Valid;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("")
@@ -217,8 +219,18 @@ public class CustomerController {
     @PostMapping("/admin/customers")
     @Operation(summary = "创建客户", description = "管理员创建新客户")
     public ResponseEntity<ApiResponse<CustomerDTO>> createCustomer(
-            @RequestBody @Valid CustomerDTO customerDTO) {
-        CustomerDTO createdCustomer = customerService.createCustomer(customerDTO);
+            @RequestBody @Valid CustomerDTO customerDTO,
+            @RequestParam(required = false) String password) {
+        
+        // 如果未提供密码，生成一个随机密码
+        String finalPassword = password;
+        if (finalPassword == null || finalPassword.isEmpty()) {
+            // 生成12位随机密码
+            finalPassword = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 12);
+        }
+        
+        // 修改为调用createCustomer方法
+        CustomerDTO createdCustomer = customerService.createCustomer(customerDTO, finalPassword);
         
         ApiResponse<CustomerDTO> response = ApiResponse.<CustomerDTO>builder()
                 .success(true)

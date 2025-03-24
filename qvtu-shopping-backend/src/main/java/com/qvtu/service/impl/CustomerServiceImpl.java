@@ -6,20 +6,26 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.qvtu.dto.AddressDTO;
 import com.qvtu.dto.CustomerDTO;
 import com.qvtu.dto.CustomerGroupDTO;
+import com.qvtu.dto.UserDTO;
 import com.qvtu.exception.EmailAlreadyExistsException;
 import com.qvtu.exception.ResourceNotFoundException;
 import com.qvtu.model.Address;
 import com.qvtu.model.Customer;
 import com.qvtu.model.CustomerGroup;
+import com.qvtu.model.User;
 import com.qvtu.repository.AddressRepository;
 import com.qvtu.repository.CustomerRepository;
 import com.qvtu.repository.CustomerGroupRepository;
 import com.qvtu.service.CustomerService;
+import com.qvtu.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +33,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.UUID;
+import java.util.Random;
+import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +46,11 @@ public class CustomerServiceImpl implements CustomerService {
     private final AddressRepository addressRepository;
     private final CustomerGroupRepository customerGroupRepository;
     private final ObjectMapper objectMapper;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+    
+    @PersistenceContext
+    private EntityManager entityManager;
     
     @Override
     public CustomerDTO findById(Long id) {
@@ -72,17 +86,74 @@ public class CustomerServiceImpl implements CustomerService {
     
     @Override
     public CustomerDTO createCustomer(CustomerDTO customerDTO) {
+        // 调用双参数版本，传入null作为密码，这会触发随机密码生成
+        return createCustomer(customerDTO, null);
+    }
+    
+    @Override
+    @Transactional
+    public CustomerDTO createCustomer(CustomerDTO customerDTO, String password) {
         // 检查邮箱是否已存在
         if (customerRepository.existsByEmail(customerDTO.getEmail())) {
             throw new EmailAlreadyExistsException(customerDTO.getEmail());
         }
         
-        Customer customer = mapToEntity(customerDTO);
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setUpdatedAt(LocalDateTime.now());
+        // 创建UserDTO对象
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(customerDTO.getEmail());
+        userDTO.setFirstName(customerDTO.getFirstName());
+        userDTO.setLastName(customerDTO.getLastName());
+        userDTO.setPhone(customerDTO.getPhone());
+        userDTO.setActive(true);
         
-        Customer savedCustomer = customerRepository.save(customer);
-        return mapToDTO(savedCustomer);
+        // 设置密码
+        if (password == null || password.isEmpty()) {
+            // 生成随机密码
+            password = generateRandomPassword();
+        }
+        
+        // 1. 先创建User实体
+        UserDTO createdUserDTO = userService.createUser(userDTO, password);
+        Long userId = createdUserDTO.getId();
+        
+        try {
+            // 2. 使用原生SQL插入Customer记录 - 只使用确定存在的列
+            int result = entityManager.createNativeQuery(
+                "INSERT INTO customers (id, has_account, company_name) VALUES (?, ?, ?)")
+                .setParameter(1, userId)
+                .setParameter(2, true)
+                .setParameter(3, customerDTO.getCompanyName())
+                .executeUpdate();
+            
+            if (result != 1) {
+                throw new RuntimeException("Failed to insert customer record");
+            }
+            
+            // 3. 直接从数据库查询整合后的Customer实体
+            entityManager.flush();
+            entityManager.clear(); // 清除持久化上下文
+            
+            Customer savedCustomer = customerRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Customer not found after creation"));
+            
+            return mapToDTO(savedCustomer);
+        } catch (Exception e) {
+            // 详细记录错误
+            e.printStackTrace();
+            throw new RuntimeException("Error creating customer: " + e.getMessage(), e);
+        }
+    }
+    
+    private String generateRandomPassword() {
+        int length = 12;
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(chars.length());
+            sb.append(chars.charAt(index));
+        }
+        return sb.toString();
     }
     
     @Override
@@ -368,6 +439,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
         
         return CustomerGroupDTO.builder()
+                .id(group.getId())
                 .name(group.getName())
                 .metadata(metadataMap)
                 .createdAt(group.getCreatedAt())

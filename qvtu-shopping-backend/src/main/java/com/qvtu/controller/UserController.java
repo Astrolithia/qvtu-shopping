@@ -139,4 +139,22 @@ public class UserController {
         
         return ResponseEntity.ok(response);
     }
+    
+    @Operation(summary = "设置用户角色", description = "管理员接口：修改指定用户的角色")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/users/{id}/role")
+    public ResponseEntity<ApiResponse<UserDTO>> setUserRole(
+            @Parameter(description = "用户ID") @PathVariable Long id,
+            @Parameter(description = "角色名称") @RequestParam String role) {
+        
+        UserDTO updatedUser = userService.setUserRole(id, role);
+        
+        ApiResponse<UserDTO> response = ApiResponse.<UserDTO>builder()
+                .success(true)
+                .message("User role updated successfully")
+                .data(updatedUser)
+                .build();
+        
+        return ResponseEntity.ok(response);
+    }
 } 

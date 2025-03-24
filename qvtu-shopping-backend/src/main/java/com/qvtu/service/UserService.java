@@ -73,4 +73,20 @@ public interface UserService {
      * @return 是否存在
      */
     boolean existsByEmail(String email);
+    
+    /**
+     * 设置用户角色
+     * @param id 用户ID
+     * @param role 角色名称
+     * @return 更新后的用户DTO
+     */
+    UserDTO setUserRole(Long id, String role);
+    
+    /**
+     * 创建用户
+     * @param userDTO 用户DTO
+     * @param password 密码
+     * @return 创建后的用户DTO
+     */
+    UserDTO createUser(UserDTO userDTO, String password);
 } 

@@ -128,4 +128,12 @@ public interface CustomerService {
      * @return 地址DTO
      */
     AddressDTO getCustomerAddress(Long customerId, Long addressId);
+    
+    /**
+     * 创建客户并设置密码
+     * @param customerDTO 客户DTO
+     * @param password 密码
+     * @return 创建后的客户DTO
+     */
+    CustomerDTO createCustomer(CustomerDTO customerDTO, String password);
 } 

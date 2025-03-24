@@ -155,6 +155,44 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByEmail(email);
     }
     
+    @Override
+    public UserDTO setUserRole(Long id, String role) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        
+        // 将角色更新为用户请求的角色
+        user.getRoles().clear();
+        user.getRoles().add(role.startsWith("ROLE_") ? role : "ROLE_" + role);
+        
+        User savedUser = userRepository.save(user);
+        return mapToDTO(savedUser);
+    }
+    
+    @Override
+    public UserDTO createUser(UserDTO userDTO, String password) {
+        // 检查邮箱是否已存在
+        if (userRepository.existsByEmail(userDTO.getEmail())) {
+            throw new EmailAlreadyExistsException(userDTO.getEmail());
+        }
+        
+        // 创建新用户
+        User user = new User();
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(password));
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setPhone(userDTO.getPhone());
+        user.setAvatarUrl(userDTO.getAvatarUrl());
+        user.getRoles().add("ROLE_CUSTOMER");
+        user.setActive(true);
+        
+        // 保存用户
+        User savedUser = userRepository.save(user);
+        
+        // 返回UserDTO
+        return mapToDTO(savedUser);
+    }
+    
     /**
      * 将User实体转换为UserDTO
      * @param user User实体

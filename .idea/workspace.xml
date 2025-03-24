@@ -30,7 +30,13 @@
       <change beforePath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/src/test/java/com/qvtu/mallshopping/controller/CustomerAuthControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mall-shopping-backend/mall-shopping/src/test/java/com/qvtu/mallshopping/controller/CustomerAuthControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../my-shopping-storefront/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../my-shopping-storefront/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../my-shopping-storefront/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../my-shopping-storefront/src/middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/config/OpenApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/config/OpenApiConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/controller/TestController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -155,7 +161,7 @@
       <workItem from="1742771656630" duration="823000" />
       <workItem from="1742772487067" duration="117000" />
       <workItem from="1742772615160" duration="2317000" />
-      <workItem from="1742775090613" duration="6370000" />
+      <workItem from="1742775090613" duration="9408000" />
     </task>
     <servers />
   </component>

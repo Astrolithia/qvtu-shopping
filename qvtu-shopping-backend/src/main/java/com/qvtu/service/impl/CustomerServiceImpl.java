@@ -99,8 +99,8 @@ public class CustomerServiceImpl implements CustomerService {
         // 创建UserDTO对象
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(customerDTO.getEmail());
-        userDTO.setFirstName(customerDTO.getFirstName());
-        userDTO.setLastName(customerDTO.getLastName());
+        userDTO.setFirstName(customerDTO.getFirst_name());
+        userDTO.setLastName(customerDTO.getLast_name());
         userDTO.setPhone(customerDTO.getPhone());
         userDTO.setActive(true);
         
@@ -120,7 +120,7 @@ public class CustomerServiceImpl implements CustomerService {
                 "INSERT INTO customers (id, has_account, company_name) VALUES (?, ?, ?)")
                 .setParameter(1, userId)
                 .setParameter(2, true)
-                .setParameter(3, customerDTO.getCompanyName())
+                .setParameter(3, customerDTO.getCompany_name())
                 .executeUpdate();
             
             if (result != 1) {
@@ -160,10 +160,10 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", id));
         
         customer.setEmail(customerDTO.getEmail());
-        customer.setFirstName(customerDTO.getFirstName());
-        customer.setLastName(customerDTO.getLastName());
+        customer.setFirstName(customerDTO.getFirst_name());
+        customer.setLastName(customerDTO.getLast_name());
         customer.setPhone(customerDTO.getPhone());
-        customer.setAvatarUrl(customerDTO.getAvatarUrl());
+        customer.setAvatarUrl(customerDTO.getAvatar_url());
         
         customer.setMetadata(customerDTO.getMetadata());
         
@@ -209,24 +209,22 @@ public class CustomerServiceImpl implements CustomerService {
         
         Address address = new Address();
         address.setCustomer(customer);
-        address.setFirstName(addressDTO.getFirstName());
-        address.setLastName(addressDTO.getLastName());
+        address.setFirstName(addressDTO.getFirst_name());
+        address.setLastName(addressDTO.getLast_name());
         address.setCompany(addressDTO.getCompany());
-        address.setAddress1(addressDTO.getAddress1());
-        address.setAddress2(addressDTO.getAddress2());
+        address.setAddress1(addressDTO.getAddress_1());
+        address.setAddress2(addressDTO.getAddress_2());
         address.setCity(addressDTO.getCity());
         address.setProvince(addressDTO.getProvince());
-        address.setPostalCode(addressDTO.getPostalCode());
-        address.setCountryCode(addressDTO.getCountryCode());
+        address.setPostalCode(addressDTO.getPostal_code());
+        address.setCountryCode(addressDTO.getCountry_code());
         address.setPhone(addressDTO.getPhone());
         
         // 处理默认地址
-        if (addressDTO.isDefaultShipping()) {
+        if (addressDTO.is_default()) {
             customer.getAddresses().forEach(a -> a.setIsDefaultShipping(false));
             address.setIsDefaultShipping(true);
-        }
-        
-        if (addressDTO.isDefaultBilling()) {
+            
             customer.getAddresses().forEach(a -> a.setIsDefaultBilling(false));
             address.setIsDefaultBilling(true);
         }
@@ -252,27 +250,25 @@ public class CustomerServiceImpl implements CustomerService {
         }
         
         // 更新地址属性
-        if (addressDTO.getFirstName() != null) address.setFirstName(addressDTO.getFirstName());
-        if (addressDTO.getLastName() != null) address.setLastName(addressDTO.getLastName());
+        if (addressDTO.getFirst_name() != null) address.setFirstName(addressDTO.getFirst_name());
+        if (addressDTO.getLast_name() != null) address.setLastName(addressDTO.getLast_name());
         if (addressDTO.getCompany() != null) address.setCompany(addressDTO.getCompany());
-        if (addressDTO.getAddress1() != null) address.setAddress1(addressDTO.getAddress1());
-        if (addressDTO.getAddress2() != null) address.setAddress2(addressDTO.getAddress2());
+        if (addressDTO.getAddress_1() != null) address.setAddress1(addressDTO.getAddress_1());
+        if (addressDTO.getAddress_2() != null) address.setAddress2(addressDTO.getAddress_2());
         if (addressDTO.getCity() != null) address.setCity(addressDTO.getCity());
         if (addressDTO.getProvince() != null) address.setProvince(addressDTO.getProvince());
-        if (addressDTO.getPostalCode() != null) address.setPostalCode(addressDTO.getPostalCode());
-        if (addressDTO.getCountryCode() != null) address.setCountryCode(addressDTO.getCountryCode());
+        if (addressDTO.getPostal_code() != null) address.setPostalCode(addressDTO.getPostal_code());
+        if (addressDTO.getCountry_code() != null) address.setCountryCode(addressDTO.getCountry_code());
         if (addressDTO.getPhone() != null) address.setPhone(addressDTO.getPhone());
         
         // 处理默认设置
-        if (addressDTO.isDefaultShipping()) {
+        if (addressDTO.is_default()) {
             // 先取消其他地址的默认配送设置
             customer.getAddresses().stream()
                 .filter(a -> !a.getId().equals(addressId))
                 .forEach(a -> a.setIsDefaultShipping(false));
             address.setIsDefaultShipping(true);
-        }
-        
-        if (addressDTO.isDefaultBilling()) {
+            
             // 先取消其他地址的默认账单设置
             customer.getAddresses().stream()
                 .filter(a -> !a.getId().equals(addressId))
@@ -416,23 +412,19 @@ public class CustomerServiceImpl implements CustomerService {
         
         CustomerDTO customerDTO = CustomerDTO.builder()
                 .id(customer.getId())
-                .userId(customer.getUserId())
                 .email(customer.getEmail())
-                .firstName(customer.getFirstName())
-                .lastName(customer.getLastName())
+                .first_name(customer.getFirstName())
+                .last_name(customer.getLastName())
                 .phone(customer.getPhone())
-                .avatarUrl(customer.getAvatarUrl())
-                .hasAccount(customer.isHasAccount())
-                .companyName(customer.getCompanyName())
-                .defaultBillingAddressId(customer.getDefaultBillingAddressId())
-                .defaultShippingAddressId(customer.getDefaultShippingAddressId())
+                .has_account(customer.isHasAccount())
+                .billing_address_id(customer.getDefaultBillingAddressId())
+                .shipping_address_id(customer.getDefaultShippingAddressId())
+                .shipping_addresses(addressDTOList)
                 .metadata(customer.getMetadata())
-                .createdBy(customer.getCreatedBy())
-                .createdAt(customer.getCreatedAt())
-                .updatedAt(customer.getUpdatedAt())
-                .deletedAt(customer.getDeletedAt())
-                .addresses(addressDTOList)
-                .groups(groupDTOs)  // Keep as Set for groups
+                .created_at(customer.getCreatedAt())
+                .updated_at(customer.getUpdatedAt())
+                .deleted_at(customer.getDeletedAt())
+                .groups(groupDTOs)
                 .build();
         
         return customerDTO;
@@ -446,23 +438,18 @@ public class CustomerServiceImpl implements CustomerService {
     private AddressDTO mapToAddressDTO(Address address) {
         return AddressDTO.builder()
                 .id(address.getId())
-                .customerId(address.getCustomer().getId())
-                .addressName(address.getAddressName())
                 .company(address.getCompany())
-                .firstName(address.getFirstName())
-                .lastName(address.getLastName())
-                .address1(address.getAddress1())
-                .address2(address.getAddress2())
+                .first_name(address.getFirstName())
+                .last_name(address.getLastName())
+                .address_1(address.getAddress1())
+                .address_2(address.getAddress2())
                 .city(address.getCity())
-                .countryCode(address.getCountryCode())
+                .country_code(address.getCountryCode())
                 .province(address.getProvince())
-                .postalCode(address.getPostalCode())
+                .postal_code(address.getPostalCode())
                 .phone(address.getPhone())
-                .isDefaultShipping(address.isIsDefaultShipping())
-                .isDefaultBilling(address.isIsDefaultBilling())
+                .is_default(address.isDefaultShipping() || address.isDefaultBilling())
                 .metadata(address.getMetadata())
-                .createdAt(address.getCreatedAt())
-                .updatedAt(address.getUpdatedAt())
                 .build();
     }
     
@@ -489,16 +476,16 @@ public class CustomerServiceImpl implements CustomerService {
     // Add this method to map DTO to entity
     private Customer mapToEntity(CustomerDTO dto) {
         Customer customer = new Customer();
-        customer.setUserId(dto.getUserId());
+        customer.setUserId(dto.getId());
         customer.setEmail(dto.getEmail());
-        customer.setFirstName(dto.getFirstName());
-        customer.setLastName(dto.getLastName());
+        customer.setFirstName(dto.getFirst_name());
+        customer.setLastName(dto.getLast_name());
         customer.setPhone(dto.getPhone());
-        customer.setAvatarUrl(dto.getAvatarUrl());
-        customer.setHasAccount(dto.isHasAccount());
-        customer.setCompanyName(dto.getCompanyName());
-        customer.setDefaultBillingAddressId(dto.getDefaultBillingAddressId());
-        customer.setDefaultShippingAddressId(dto.getDefaultShippingAddressId());
+        customer.setAvatarUrl(dto.getAvatar_url());
+        customer.setHasAccount(dto.isHas_account());
+        customer.setCompanyName(dto.getCompany_name());
+        customer.setDefaultBillingAddressId(dto.getBilling_address_id());
+        customer.setDefaultShippingAddressId(dto.getShipping_address_id());
         customer.setMetadata(dto.getMetadata());
         // Don't set createdAt, updatedAt here - they're set in the calling method
         return customer;

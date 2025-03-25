@@ -32,10 +32,27 @@
       <change beforePath="$PROJECT_DIR$/../my-shopping-storefront/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../my-shopping-storefront/src/middleware.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/dto/AddressDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/dto/AddressDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/dto/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/dto/CustomerDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/service/impl/CustomerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/src/main/java/com/qvtu/service/impl/CustomerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/config/JacksonConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/config/JacksonConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/controller/CustomerController.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/controller/CustomerController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/AddressDTO$AddressDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/AddressDTO$AddressDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/AddressDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/AddressDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/CustomerDTO$CustomerDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/CustomerDTO$CustomerDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/CustomerDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/CustomerDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/CustomerGroupRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/CustomerGroupRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/UserDTO$UserDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/UserDTO$UserDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/dto/UserDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/model/Customer.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/model/Customer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/repository/CustomerGroupRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/repository/CustomerGroupRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/repository/CustomerRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/repository/CustomerRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/service/impl/CustomerServiceImpl$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/service/impl/CustomerServiceImpl$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/service/impl/CustomerServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/service/impl/CustomerServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/service/impl/UserServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/util/JwtUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/qvtu-shopping-backend/target/classes/com/qvtu/util/JwtUtil.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +176,7 @@
       <workItem from="1742771656630" duration="823000" />
       <workItem from="1742772487067" duration="117000" />
       <workItem from="1742772615160" duration="2317000" />
-      <workItem from="1742775090613" duration="21556000" />
+      <workItem from="1742775090613" duration="23498000" />
     </task>
     <servers />
   </component>

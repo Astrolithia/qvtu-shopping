@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.qvtu.config.CustomLocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,21 +20,34 @@ import java.util.Set;
 public class CustomerDTO {
     
     private Long id;
-    private Long userId;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String first_name; // 修改为下划线命名
+    private String last_name;  // 修改为下划线命名
     private String phone;
-    private String avatarUrl;
-    private boolean hasAccount;
-    private String companyName;
-    private Long defaultBillingAddressId;
-    private Long defaultShippingAddressId;
+    @JsonIgnore
+    private String password; // 仅用于创建请求，不会返回
+    private boolean has_account; // 修改为下划线命名
+    
+    // 地址相关
+    private Long billing_address_id; // 修改为下划线命名
+    private Long shipping_address_id; // 修改为下划线命名
+    private List<AddressDTO> shipping_addresses; // 修改为下划线命名
+    
+    // 元数据
     private Map<String, Object> metadata;
-    private String createdBy;
-    private List<AddressDTO> addresses;
+    
+    // 客户分组
     private Set<CustomerGroupDTO> groups;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime deletedAt;
-} 
+    
+    // 审计字段
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    private LocalDateTime created_at; // 修改为下划线命名
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    private LocalDateTime updated_at; // 修改为下划线命名
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    private LocalDateTime deleted_at; // 修改为下划线命名
+
+    // 添加缺失的字段
+    private String company_name;
+    private String avatar_url;
+}

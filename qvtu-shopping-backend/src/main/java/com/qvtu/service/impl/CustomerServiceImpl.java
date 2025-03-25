@@ -12,7 +12,6 @@ import com.qvtu.exception.ResourceNotFoundException;
 import com.qvtu.model.Address;
 import com.qvtu.model.Customer;
 import com.qvtu.model.CustomerGroup;
-import com.qvtu.model.User;
 import com.qvtu.repository.AddressRepository;
 import com.qvtu.repository.CustomerRepository;
 import com.qvtu.repository.CustomerGroupRepository;
@@ -21,11 +20,11 @@ import com.qvtu.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.hibernate.Hibernate;
 
 import java.util.List;
 import java.util.Map;
@@ -33,9 +32,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.UUID;
 import java.util.Random;
-import java.util.HashMap;
+import java.util.Set;
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +46,6 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerGroupRepository customerGroupRepository;
     private final ObjectMapper objectMapper;
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
     
     @PersistenceContext
     private EntityManager entityManager;
@@ -184,12 +182,24 @@ public class CustomerServiceImpl implements CustomerService {
     
     @Override
     public List<AddressDTO> getAddressesByCustomerId(Long customerId) {
-        Customer customer = customerRepository.findById(customerId)
-                .orElseThrow(() -> new ResourceNotFoundException("Customer", "id", customerId));
-        
-        return customer.getAddresses().stream()
-                .map(this::mapToAddressDTO)
-                .collect(Collectors.toList());
+        try {
+            // 检查客户是否存在
+            if (!customerRepository.existsById(customerId)) {
+                throw new ResourceNotFoundException("Customer", "id", customerId);
+            }
+            
+            // 直接从AddressRepository查询地址
+            List<Address> addresses = addressRepository.findByCustomerId(customerId);
+            
+            // 转换为DTO并返回
+            return addresses.stream()
+                    .map(this::mapToAddressDTO)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error retrieving customer addresses: " + 
+                    (e.getMessage() != null ? e.getMessage() : "Database error fetching addresses"), e);
+        }
     }
     
     @Override
@@ -363,7 +373,37 @@ public class CustomerServiceImpl implements CustomerService {
      * @return CustomerDTO
      */
     private CustomerDTO mapToDTO(Customer customer) {
-        CustomerDTO dto = CustomerDTO.builder()
+        if (customer == null) {
+            return null;
+        }
+        
+        // 先初始化懒加载集合，避免在流处理中懒加载导致的问题
+        Hibernate.initialize(customer.getAddresses());
+        Hibernate.initialize(customer.getGroups());
+        
+        // 创建新集合来避免并发修改异常
+        Set<AddressDTO> addressDTOs = new HashSet<>();
+        if (customer.getAddresses() != null) {
+            // 创建一个新的ArrayList作为安全副本
+            List<Address> addressesCopy = new ArrayList<>(customer.getAddresses());
+            addressDTOs = addressesCopy.stream()
+                    .map(address -> mapToAddressDTO(address))
+                    .collect(Collectors.toSet());
+        }
+        
+        Set<CustomerGroupDTO> groupDTOs = new HashSet<>();
+        if (customer.getGroups() != null) {
+            // 创建一个新的ArrayList作为安全副本
+            List<CustomerGroup> groupsCopy = new ArrayList<>(customer.getGroups());
+            groupDTOs = groupsCopy.stream()
+                    .map(group -> mapToCustomerGroupDTO(group))
+                    .collect(Collectors.toSet());
+        }
+        
+        // Convert only addresses to List, keep groups as Set
+        List<AddressDTO> addressDTOList = new ArrayList<>(addressDTOs);
+        
+        CustomerDTO customerDTO = CustomerDTO.builder()
                 .id(customer.getId())
                 .userId(customer.getUserId())
                 .email(customer.getEmail())
@@ -380,23 +420,11 @@ public class CustomerServiceImpl implements CustomerService {
                 .createdAt(customer.getCreatedAt())
                 .updatedAt(customer.getUpdatedAt())
                 .deletedAt(customer.getDeletedAt())
+                .addresses(addressDTOList)
+                .groups(groupDTOs)  // Keep as Set for groups
                 .build();
         
-        // 加载地址
-        if (customer.getAddresses() != null) {
-            dto.setAddresses(customer.getAddresses().stream()
-                    .map(this::mapToAddressDTO)
-                    .collect(Collectors.toList()));
-        }
-        
-        // 加载客户组
-        if (customer.getGroups() != null) {
-            dto.setGroups(customer.getGroups().stream()
-                    .map(this::mapToCustomerGroupDTO)
-                    .collect(Collectors.toSet()));
-        }
-        
-        return dto;
+        return customerDTO;
     }
     
     /**

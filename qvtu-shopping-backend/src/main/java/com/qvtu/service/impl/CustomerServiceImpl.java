@@ -251,6 +251,7 @@ public class CustomerServiceImpl implements CustomerService {
             throw new ResourceNotFoundException("Address", "id", addressId);
         }
         
+        // 更新地址属性
         if (addressDTO.getFirstName() != null) address.setFirstName(addressDTO.getFirstName());
         if (addressDTO.getLastName() != null) address.setLastName(addressDTO.getLastName());
         if (addressDTO.getCompany() != null) address.setCompany(addressDTO.getCompany());
@@ -262,19 +263,29 @@ public class CustomerServiceImpl implements CustomerService {
         if (addressDTO.getCountryCode() != null) address.setCountryCode(addressDTO.getCountryCode());
         if (addressDTO.getPhone() != null) address.setPhone(addressDTO.getPhone());
         
-        // 处理默认地址
-        if (addressDTO.isDefaultShipping() && !address.isIsDefaultShipping()) {
-            customer.getAddresses().forEach(a -> a.setIsDefaultShipping(false));
+        // 处理默认设置
+        if (addressDTO.isDefaultShipping()) {
+            // 先取消其他地址的默认配送设置
+            customer.getAddresses().stream()
+                .filter(a -> !a.getId().equals(addressId))
+                .forEach(a -> a.setIsDefaultShipping(false));
             address.setIsDefaultShipping(true);
         }
         
-        if (addressDTO.isDefaultBilling() && !address.isIsDefaultBilling()) {
-            customer.getAddresses().forEach(a -> a.setIsDefaultBilling(false));
+        if (addressDTO.isDefaultBilling()) {
+            // 先取消其他地址的默认账单设置
+            customer.getAddresses().stream()
+                .filter(a -> !a.getId().equals(addressId))
+                .forEach(a -> a.setIsDefaultBilling(false));
             address.setIsDefaultBilling(true);
         }
         
-        address.setMetadata(addressDTO.getMetadata());
+        // 更新元数据
+        if (addressDTO.getMetadata() != null) {
+            address.setMetadata(addressDTO.getMetadata());
+        }
         
+        // 保存更新后的地址
         Address updatedAddress = addressRepository.save(address);
         
         return mapToAddressDTO(updatedAddress);

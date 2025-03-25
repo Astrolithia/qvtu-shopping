@@ -355,7 +355,7 @@ public class CustomerController {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/customers/{id}/addresses/{addressId}")
+    @PostMapping("/admin/customers/{id}/addresses/{addressId}")
     @Operation(summary = "管理员更新客户地址", description = "管理员为指定客户更新地址信息")
     public ResponseEntity<ApiResponse<AddressDTO>> updateCustomerAddress(
             @PathVariable Long id,
